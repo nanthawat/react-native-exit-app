@@ -16,11 +16,12 @@ RCT_EXPORT_MODULE();
 
 RCT_EXPORT_METHOD(exitApp)
 {
-    UIApplication *app = [UIApplication sharedApplication];
-    [app performSelector:@selector(suspend)];
-
-    [NSThread sleepForTimeInterval:0.5];
-    exit(0);
+    dispatch_async(dispatch_get_main_queue(), ^{
+        UIApplication *app = [UIApplication sharedApplication];
+        [app performSelector:@selector(suspend)];
+        [NSThread sleepForTimeInterval:0.5];
+        exit(0);
+    });
 };
 
 @end
